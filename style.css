@@ -5,3 +5,34 @@ body{
 .title{
     font-size: 1.75rem;
 }
+
+:root{
+    --anchor-color: #00c3ff;
+    --anchor-hover: #ffa500;
+}
+/* Anchor_tag */
+a[href] {
+  /* cursor: alias; */
+  cursor: default;
+  color: var(--anchor-color, #00c3ff);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+a[href]:hover, a[href]:focus {
+  color: var(--anchor-hover, #ffa500);
+}
+
+a[href].button, [lang] button.button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--anchor-color, #00c3ff);
+  color: #fff;
+  padding: 3px;
+  height: 25.6px;
+}
+
+a[href].button:hover, [lang] button.button:hover,
+a[href].button:focus, [lang] button.button:focus {
+  background-color: var(--anchor-hover, #ffa500);
+}
