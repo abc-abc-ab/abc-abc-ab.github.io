@@ -1,0 +1,580 @@
+@charset "UTF-8";
+/* チェックボックスを非表示にする */
+.hidden {
+  display: none;
+}
+
+/* ハンバーガーアイコンの設置スペース */
+.open {
+  display: flex;
+  height: 60px;
+  width: 60px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 100;
+  /* 重なり順を一番上にする */
+}
+
+/* ハンバーガーメニューのアイコン */
+.open span, .open span::before, .open span::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 25px;
+  border-radius: 3px;
+  background: #333;
+  transition: 0.5s;
+  position: absolute;
+} /* 三本線の一番上の棒の位置調整 */
+.open span::before {
+  bottom: 8px;
+}
+
+/* 三本線の一番下の棒の位置調整 */
+.open span::after {
+  top: 8px;
+}
+
+/* アイコンがクリックされたら真ん中の線を透明にする */
+#Input:checked ~ .open span {
+  background: rgba(255, 255, 255, 0);
+}
+
+/* アイコンがクリックされたらアイコンが×印になように上下の線を回転 */
+#Input:checked ~ .open span::before {
+  bottom: 0;
+  transform: rotate(45deg);
+}
+
+#Input:checked ~ .open span::after {
+  top: 0;
+  transform: rotate(135deg);
+}
+
+/* メニューのデザイン*/
+.nav_content {
+  position: fixed;
+  top: -200px;
+  right: 75px;
+  opacity: 0;
+  z-index: -1;
+  /* メニューを画面の外に飛ばす */ /******/
+  z-index: 99;
+  transition: 0.5s;
+}
+
+/* アイコンがクリックされたらメニューを表示 */
+.nav_content {
+  background-color: #ffffff;
+  width: 100vw;
+}
+
+#Input:checked ~ .nav_content {
+  top: 100px; /******/
+  /* メニューを画面に入れる */
+  opacity: 1;
+}
+
+@font-face {
+  font-family: "marui";
+  font-weight: 1;
+  src: url(./woff/fonts.woff) format("woff");
+}
+.fonts.marui {
+  font-family: "marui", "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", "Meirio", "Verdana", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tx-c: #ffffff;
+    --b-c: #454545;
+    --hd-c: #3ea8c5;
+    --ft-c: #cbcbcb;
+    --sb-c: #008273;
+    --s-c: #87fff1;
+    --tr-c: #6f6f00;
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --tx-c: #000000;
+    --b-c: #e4e4e4;
+    --hd-c: #ffffff;
+    --ft-c: #707070;
+    --sb-c: #00e4c9;
+    --s-c: #54a198;
+    --tr-c: #ffff00;
+  }
+}
+
+head, head *, title, meta, link, script, style {
+  display: none;
+  /* display: block; */
+  /* min-height: 15px; */
+  --上の2つを-: "やってみて";
+  --try-the-: "above-two";
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+:root {
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  --anchor-color: #00c3ff;
+  --anchor-hover: #ffa500;
+  --line-color: #8c00ff;
+}
+
+:root, body {
+  min-height: 100vh;
+  min-width: 100%;
+  width: 100%;
+}
+
+html {
+  -webkit-locale: "ja";
+  direction: ltr;
+  unicode-bidi: embed;
+  /* unicode-bidi: initial; */
+}
+
+* {
+  transition: color 0.3s, background 0.3s;
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+*::-moz-selection {
+  background-color: var(--sb-c, #00e4c9);
+  color: var(--s-c, #54a198);
+}
+
+*::selection {
+  background-color: var(--sb-c, #00e4c9);
+  color: var(--s-c, #54a198);
+}
+
+*:target {
+  background-color: var(--tr-c, #ff0);
+  color: var(--s-c, #54a198);
+}
+
+body {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; /* flex-flow */
+  overflow-x: hidden;
+  overflow-y: scroll; /* overflow(x | y)*/
+  background-color: var(--b-c, #e4e4e4);
+}
+
+html[lang=ja] * {
+  font-family: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", "Meirio", "Verdana", serif;
+}
+
+html[lang=en] * {
+  font-family: "Yu Gothic", "YuGothic", "Meirio", "Verdana", serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 103px;
+  flex-grow: 1;
+}
+
+noscript {
+  font-size: 3.125rem;
+  color: var(--line-color, #8c00ff);
+}
+
+p, bigger, li {
+  margin: 0;
+  color: var(--tx-c, #000);
+}
+
+/*
+         /  /
+         /  /
+        /    /
+        /    /
+       /      /
+       /      /
+      /        /
+      /********`/
+     /          /
+     /          /
+    /            /
+    /            /
+   /              /
+   /              /
+  /                /
+  /                /
+/                  */
+/* Anchor_tag */
+a[href] {
+  /* cursor: alias; */
+  cursor: default;
+  color: var(--anchor-color, #00c3ff);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+a[href]:hover, a[href]:focus {
+  color: var(--anchor-hover, #ffa500);
+}
+
+a[href].button, [lang] button.button {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--anchor-color, #00c3ff);
+  color: #fff;
+  padding: 3px;
+  height: 25.6px;
+}
+
+a[href].button:hover, [lang] button.button:hover,
+a[href].button:focus, [lang] button.button:focus {
+  background-color: var(--anchor-hover, #ffa500);
+}
+
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+[lang] button:not(.button) {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--hd-c, #fff);
+  color: var(--line-color, #8c00ff);
+  padding: 3px;
+  height: 25.6px;
+}
+
+[lang] button:not(.button):hover,
+[lang] button:not(.button):focus {
+  background-color: var(--ft-c, #707070);
+}
+
+/****************************************`/
+/                                         /
+/                                         /
+/                                         /
+/                                         /
+/                                         /
+/                                         /
+/                                         /
+/****************************************`/
+                    /
+                    /
+                    /
+                    /
+                    /
+                    /
+           /*******************/
+/* Responsive */
+@media screen and (max-width: 476px) { /*スマホ向け*/
+  bigger {
+    font-size: 9vw;
+  }
+  .BreadCrumb_list ol {
+    margin: 16px 0 16px -20vw;
+    padding: 0;
+  }
+  div.nav.sp {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  div.menu.pc {
+    display: none;
+  }
+  .smart_phone {
+    display: block;
+  }
+}
+@media screen and (min-width: 477px) and (max-width: 769px) { /*タブレット向け*/
+  bigger {
+    font-size: 7vw;
+  }
+  div.nav.sp {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  div.menu.pc {
+    display: none;
+  }
+  .tablet {
+    display: block;
+  }
+} /* 上記以外 | PC向け | */
+div.nav {
+  display: none;
+}
+
+div.menu {
+  display: block;
+}
+
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+.left {
+  float: none;
+  margin: auto auto auto 10px;
+}
+
+.center {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.right {
+  float: none;
+  margin: auto 10px auto auto;
+}
+
+/*                             /
+/                              /
+/                              /
+/                              /
+/                              /
+/                              /
+/                              /
+/*****************************`/
+/                              /
+/                              /
+/                              /
+/                              /
+/                              /
+/                              /
+/　　　　　　　　　　　　　　　/
+/                              /
+/                              /
+/                             */
+/* Header */
+#head {
+  background-color: var(--hd-c, #fff);
+  max-width: 100%;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  margin-top: 0px;
+  position: fixed;
+  z-index: 100;
+  flex-flow: row nowrap;
+}
+
+#logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+div.pc, div.pc > ul {
+  display: flex;
+  padding: 0;
+}
+
+div.pc > ul li {
+  margin: 10px;
+}
+
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/*****************************
+/
+/
+/
+/
+/
+/
+/*****************************
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+/* Footer */
+#foot {
+  background-color: var(--ft-c, #707070);
+  min-width: 100%;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+#footer {
+  flex-grow: 1;
+  min-height: 94.4px;
+  height: 94.4px;
+  max-height: 94.4px;
+}
+
+#CompanyName {
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+}
+#CompanyName > small {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+/* End */
+.BreadCrumb_list {
+  display: flex;
+  width: 100%;
+}
+.BreadCrumb_list * {
+  margin: 0;
+}
+
+.ol {
+  padding-left: 10px;
+  display: flex;
+}
+
+.next::after {
+  content: ">";
+  color: var(--ft-c, #707070);
+}
+
+ul, ol {
+  margin-left: 80px;
+}
+ul:not([disc], [decimal]) > li, ol:not([disc], [decimal]) > li {
+  list-style-type: none;
+}
+
+bigger {
+  font-size: 4.0625rem;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+}
+
+html[lang] body .RomaNum {
+  font-family: system-ui;
+}
+
+#video {
+  position: fixed;
+  bottom: 20vmin;
+  right: 0;
+}
+
+pre {
+  position: relative;
+}
+pre::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+label:not(#Space) {
+  white-space: pre-line;
+}/*# sourceMappingURL=all.css.map */
