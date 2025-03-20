@@ -5,6 +5,10 @@ body{
 .title{
     font-size: 1.75rem;
 }
+.caption{
+    font-size: 1.25rem;
+}
+
 
 :root{
     --anchor-color: #0066ff;
