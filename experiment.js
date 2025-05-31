@@ -58,4 +58,6 @@ button.addEventListener("click", () => {
 	const min = now.getMinutes();
 	const sec = now.getSeconds();
 	const date = now.getDate();
+
+	button
 });
