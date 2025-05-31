@@ -30,17 +30,6 @@ request.onsuccess = (event) => {
 	const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 	const objectStore = transaction.objectStore(DB_STORE_NAME);
 
-
-
-
-
-
-
-
-
-
-
-
 };
 // This event is only implemented in modern browsers.
 request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
