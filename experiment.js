@@ -11,7 +11,7 @@ const button = document.getElementById("measure");
 // Open the database
 const request = indexedDB.open(DB_NAME, DB_VERSION);
 /** @type {IDBDatabase} */
-let ifDB;
+let db = null, ifDB = false;
 
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 // Check if IndexedDB is supported
@@ -27,7 +27,7 @@ request.onerror = (event) => {
 request.onsuccess = (event) => {
 	console.log("Database opened successfully");
 
-	const db = ifDB?ifDB:request.result;
+	db = ifDB?ifDB:request.result;
 	const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 	const objectStore = transaction.objectStore(DB_STORE_NAME);
 
@@ -38,7 +38,7 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 	ifDB = event.target.result;
 
 	// Create an objectStore for this database
-	const objectStore = db.createObjectStore(DB_STORE_NAME, { keyPath: "Index" });
+	const objectStore = ifDB.createObjectStore(DB_STORE_NAME, { keyPath: "Index" });
 
 	// year: yyyy, month: mm, day: dd
 	objectStore.createIndex("year","year", { unique: false });
