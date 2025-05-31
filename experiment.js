@@ -51,6 +51,11 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 };
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 
-
-
-
+// Measure button click event
+button.addEventListener("click", () => {
+	// Get the current date and time
+	const now = new Date();
+	const min = now.getMinutes();
+	const sec = now.getSeconds();
+	const date = now.getDate();
+});
