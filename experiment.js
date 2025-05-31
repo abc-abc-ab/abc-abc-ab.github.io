@@ -7,6 +7,9 @@ DB_TRANSACTION_MODE = "readwrite";
 
 // Get the button element
 const button = document.getElementById("measure");
+function InitButton(){
+	button.textContent = "スタート";
+}
 
 // Open the database
 const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -59,5 +62,5 @@ button.addEventListener("click", () => {
 	const sec = now.getSeconds();
 	const date = now.getDate();
 
-	button
+	button.textContent = "ストップ";
 });
