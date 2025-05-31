@@ -2,7 +2,7 @@
 
 const DB_NAME = "Experiments",
 DB_VERSION = 1;
-DB_STORE_NAME = "Times";
+DB_STORE_NAME = "Times",
 DB_TRANSACTION_MODE = "readwrite";
 
 const button = document.getElementById("measure");
