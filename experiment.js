@@ -12,7 +12,7 @@ const request = indexedDB.open(DB_NAME, DB_VERSION);
 /** @type {IDBDatabase} */
 let ifDB;
 
-// IndexedDB API	
+// IndexedDB API
 					// Check if IndexedDB is supported
 					// Error handling
 					request.onerror = (event) => {
