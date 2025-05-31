@@ -7,14 +7,17 @@ DB_TRANSACTION_MODE = "readwrite";
 
 // Get the button element
 const button = document.getElementById("measure");
+let buttonState = false;
 function InitButton(){
 	button.textContent = "スタート";
+	buttonState = false;
 }
 
 // Open the database
 const request = indexedDB.open(DB_NAME, DB_VERSION);
 /** @type {IDBDatabase} */
-let db = null, ifDB = false;
+let db = null, ifDB = false, min = 0, sec = 0, date = 0,
+min1 = 0, sec1 = 0, date1 = 0;
 
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 // Check if IndexedDB is supported
@@ -55,12 +58,17 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 
 // Measure button click event
+InitButton();
 button.addEventListener("click", () => {
-	// Get the current date and time
-	const now = new Date();
-	const min = now.getMinutes();
-	const sec = now.getSeconds();
-	const date = now.getDate();
+	if(buttonState){
+		const now = new Date();
+		[min1, sec1, date1] = [now.getMinutes(), now.getSeconds(), now.getDate()];
+	}
+	else{
+		// Get the current date and time
+		const now = new Date();
+		[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
 
-	button.textContent = "ストップ";
+		button.textContent = "ストップ";
+	}
 });
