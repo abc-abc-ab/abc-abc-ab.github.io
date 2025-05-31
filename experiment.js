@@ -5,6 +5,7 @@ DB_VERSION = 1,
 DB_STORE_NAME = "Times",
 DB_TRANSACTION_MODE = "readwrite";
 
+// Get the button element
 const button = document.getElementById("measure");
 
 // Open the database
