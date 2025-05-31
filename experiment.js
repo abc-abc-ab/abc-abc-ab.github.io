@@ -1,16 +1,18 @@
 "use strict";
 
-const DB_NAME = "Experiments";
-const DB_VERSION = 1;
-const DB_STORE_NAME = "Times";
-const DB_TRANSACTION_MODE = "readwrite";
+const DB_NAME = "Experiments",
+DB_VERSION = 1;
+DB_STORE_NAME = "Times";
+DB_TRANSACTION_MODE = "readwrite";
+
+const button = document.getElementById("measure");
 
 // Open the database
-const request = window.indexedDB.open(DB_NAME, DB_VERSION);
+const request = indexedDB.open(DB_NAME, DB_VERSION);
 /** @type {IDBDatabase} */
 let ifDB;
 
-{ // IndexedDB API	
+// IndexedDB API	
 					// Check if IndexedDB is supported
 					// Error handling
 					request.onerror = (event) => {
@@ -41,11 +43,10 @@ let ifDB;
 						// sec: ss
 						objectStore.createIndex("sec","sec", { unique: false });
 					};
-}
+
 
 const db = ifDB?ifDB:request.result;
 const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 const objectStore = transaction.objectStore(DB_STORE_NAME);
-
 
 
