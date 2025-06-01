@@ -143,6 +143,7 @@ if (button) {
 
 if (submit) {
 	submit.addEventListener("click", (event) => {
+		event.preventDefault();
 		const request = indexedDB.open(DB_NAME, DB_VERSION);
 		// Check if IndexedDB is supported
 		// Error handling
@@ -192,5 +193,6 @@ if (submit) {
 		};
 
 		submit.href = `mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=${encodeURIComponent(body)}`;
+		window.open(submit.href, "_blank");
 	});
 }
