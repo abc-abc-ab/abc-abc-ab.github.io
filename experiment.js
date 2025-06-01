@@ -16,9 +16,14 @@ function InitButton(){
 // Open the database
 const request = indexedDB.open(DB_NAME, DB_VERSION);
 /** @type {IDBDatabase} */
-let db = null, ifDB = false, min = 0, sec = 0, date = 0,
-min1 = 0, sec1 = 0, date1 = 0;
+let db = null, /** @type {IDBDatabase} */
+ifDB = false, min = 0, sec = 0, date = 0,
+min1 = 0, sec1 = 0;
 
+/**
+ * @param {number} diff
+ */
+function DB(diff){
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 // Check if IndexedDB is supported
 // Error handling
@@ -37,6 +42,15 @@ request.onsuccess = (event) => {
 	const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 	const objectStore = transaction.objectStore(DB_STORE_NAME);
 
+	const now = new Date();
+	// Add a new record to the objectStore
+	const record = {
+		year: now.getFullYear(),
+		month: now.getMonth() + 1, // Months are zero-based
+		day: now.getDate(),
+		when: (min < 12) ? "M" : (min < 18) ? "N" : "E", // Morning, Noon, Evening
+		sec: diff
+	};
 };
 // This event is only implemented in modern browsers.
 request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
@@ -44,7 +58,7 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 	ifDB = event.target.result;
 
 	// Create an objectStore for this database
-	const objectStore = ifDB.createObjectStore(DB_STORE_NAME, { keyPath: "Index" });
+	const objectStore = ifDB.createObjectStore(DB_STORE_NAME, {autoIncrement: true});
 
 	// year: yyyy, month: mm, day: dd
 	objectStore.createIndex("year","year", { unique: false });
@@ -56,13 +70,17 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 	objectStore.createIndex("sec","sec", { unique: false });
 };
 // IndexedDB API ----------------------------------------------------------------------------------------------------
-
+}
 // Measure button click event
 InitButton();
 button.addEventListener("click", () => {
 	if(buttonState){
 		const now = new Date();
-		[min1, sec1, date1] = [now.getMinutes(), now.getSeconds(), now.getDate()];
+		[min1, sec1] = [now.getMinutes(), now.getSeconds()];
+		const t0 = min*60 + sec;
+		const t1 = min1*60 + sec1;
+		const diff = t1 - t0;
+		DB();
 	}
 	else{
 		// Get the current date and time
