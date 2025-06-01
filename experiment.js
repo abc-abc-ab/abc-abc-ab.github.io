@@ -64,6 +64,7 @@ function DB(diff, measureName) {
 		const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // M(0-11), N(12-17), E(18-23)
 		// Add a new record to the objectStore
 		const record = {
+			name: measureName,
 			year: now.getFullYear(),
 			month: now.getMonth() + 1, // Months are zero-based!
 			day: now.getDate(),
