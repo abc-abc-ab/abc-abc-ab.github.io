@@ -191,6 +191,5 @@ if (submit) {
 		};
 
 		submit.href = `mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=${encodeURIComponent(body)}`;
-		submit.dispatchEvent(new Event("click"));
 	});
 }
