@@ -102,6 +102,7 @@ button.addEventListener("click", () => {
 		const now = new Date();
 		[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
 
+		buttonState = true;
 		button.textContent = "ストップ";
 	}// buttonState = 3?
 });
