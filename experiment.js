@@ -175,7 +175,7 @@ if (submit) {
 				body += `# ${index + 1}:\n`;
 				body += `名前: ${record.name}\n`;
 				body += `日付: ${record.year}/${record.month}/${record.day}\n`;
-				body += `時間帯: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夜")}\n`;
+				body += `時間帯: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夕方")}\n`;
 				body += `秒数: ${record.sec}秒\n\n`;
 			});
 		}
