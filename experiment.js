@@ -9,6 +9,7 @@ DB_TRANSACTION_MODE = "readwrite";
 const button = document.getElementById("measure");
 let buttonState = false;
 function InitButton(){
+	if (!button) return;
 	button.children[0].textContent = "スタート";
 	buttonState = false;
 }
@@ -16,8 +17,7 @@ function InitButton(){
 // Open the database
 
 /** @type {IDBDatabase} */
-let db = null, /** @type {IDBDatabase} */
-ifDB = false, min = 0, sec = 0, date = 0,
+let db = null, ifDB = false, min = 0, sec = 0, date = 0,
 min1 = 0, sec1 = 0;
 
 /**
@@ -56,12 +56,14 @@ function DB(diff){
 		};
 
 		const now = new Date();
+		const hour = now.getHours();
+		const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // 修正: getHours()を使用
 		// Add a new record to the objectStore
 		const record = {
 			year: now.getFullYear(),
 			month: now.getMonth() + 1, // Months are zero-based!
 			day: now.getDate(),
-			when: (now.getMinutes() < 12) ? "M" : (now.getMinutes() < 18) ? "N" : "E", // Morning, Noon, Evening
+			when: when,
 			sec: diff
 		};
 
@@ -91,23 +93,26 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 
 // Measure button click event
 InitButton();
-button.addEventListener("click", () => {
-	if(buttonState === true){
-		const now = new Date();
-		[min1, sec1] = [now.getMinutes(), now.getSeconds()];
-		const t0 = min*60 + sec;
-		const t1 = min1*60 + sec1;
-		const diff = t1 - t0;
-		button.children[0].textContent = "終了";
-		buttonState = 3;
-		DB(diff);
-	}
-	else if(buttonState === false){
-		// Get the current date and time
-		const now = new Date();
-		[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
+if (button) {
+	button.addEventListener("click", () => {
+		if(buttonState === true){
+			const now = new Date();
+			[min1, sec1] = [now.getMinutes(), now.getSeconds()];
+			const t0 = min*60 + sec;
+			const t1 = min1*60 + sec1;
+			const diff = t1 - t0;
+			button.children[0].textContent = "終了";
+			buttonState = 3; // 終わった後: 3
+			DB(diff);
+		}
+		else if(buttonState === false){
+			// Get the current date and time
+			const now = new Date();
+			[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
 
-		buttonState = true;
-		button.children[0].textContent = "ストップ";
-	}// buttonState = 3?
-});
+			buttonState = true;
+			button.children[0].textContent = "ストップ";
+		}
+		// もし「終了」状態から再スタートしたい場合はここに追加できます
+	});
+}
