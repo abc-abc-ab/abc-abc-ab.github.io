@@ -164,11 +164,12 @@ if (submit) {
 				const results = getAllRequest.result;
 				if (results.length === 0) {
 					alert("No data found in the database.");
+					body += "-- 実験結果がありません_(._.)_ --";
 					return;
 			}
 
 			// Prepare the email body
-			body = "実験結果:\n\n";
+			
 			results.forEach((record, index) => {
 				body += `# ${index + 1}:\n`;
 				body += `名前: ${record.name}\n`;
