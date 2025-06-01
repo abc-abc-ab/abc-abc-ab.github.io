@@ -25,7 +25,7 @@ submit = document.getElementById("submit");
 // Open the database
 
 /** @type {IDBDatabase} */
-let db = null, ifDB = false, min = 0, sec = 0, date = 0,
+let db = null, min = 0, sec = 0, date = 0,
 min1 = 0, sec1 = 0, body = "";
 
 {
@@ -33,15 +33,11 @@ min1 = 0, sec1 = 0, body = "";
 	// Check if IndexedDB is supported
 	// Error handling
 	request.onerror = (event) => {
-		console.log("Error opening database: %s", request.error.message);
-		alert(
-			"Sorry, you can't use IndexedDB.",
-		);
-		throw new Error("IndexedDB is not supported in this browser.");
+		console.log("Maybe you can't use IndexedDB: %s", request.error.message);
 	};
 
 	request.onsuccess = (event) => {
-		console.log("Database opened successfully");
+		console.log("You can use IndexedDB.");
 	};
 };
 
