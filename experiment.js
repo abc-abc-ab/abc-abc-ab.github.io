@@ -3,7 +3,7 @@
 const DB_NAME = "Experiments", // Database name
 DB_VERSION = 1, // Database version
 DB_STORE_NAME = "Times", // Object store name
-DB_TRANSACTION_MODE = "readwrite";
+DB_TRANSACTION_MODE = "readwrite"; // Transaction mode
 
 // Get the button element
 const button = document.getElementById("measure");
