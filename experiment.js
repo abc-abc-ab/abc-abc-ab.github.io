@@ -33,7 +33,7 @@ min1 = 0, sec1 = 0, body = "";
 	// Check if IndexedDB is supported
 	// Error handling
 	request.onerror = (event) => {
-		console.log("Maybe you can't use IndexedDB: %s", request.error.message);
+		console.log("Maybe you can't use IndexedDB. because \"%s\".", request.error.message);
 	};
 
 	request.onsuccess = (event) => {
