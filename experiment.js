@@ -39,7 +39,11 @@ min1 = 0, sec1 = 0, body = "";
 		);
 		throw new Error("IndexedDB is not supported in this browser.");
 	};
-}
+
+	request.onsuccess = (event) => {
+		console.log("Database opened successfully");
+	};
+};
 
 /**
  * @param {number} diff
