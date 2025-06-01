@@ -1,7 +1,7 @@
 "use strict";
 
 const DB_NAME = "Experiments", // Database name
-DB_VERSION = 1,
+DB_VERSION = 1, // Database version
 DB_STORE_NAME = "Times",
 DB_TRANSACTION_MODE = "readwrite";
 
