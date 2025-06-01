@@ -64,7 +64,7 @@ function DB(diff, measureName) {
 		console.log("Database opened successfully");
 		
 		db = request.result;
-		const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
+		const transaction = DB.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 		const objectStore = transaction.objectStore(DB_STORE_NAME);
 		
 		transaction.oncomplete = () => {
