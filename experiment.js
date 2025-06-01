@@ -160,9 +160,9 @@ if (submit) {
 			const transaction = DB.transaction(DB_STORE_NAME);
 			const objectStore = transaction.objectStore(DB_STORE_NAME);
 			const getAllRequest = objectStore.getAll();
-			body = "実験結果:\n\n";
 			getAllRequest.onsuccess = (event) => {
 				const results = getAllRequest.result;
+				body = "実験結果:\n\n";
 				if (results.length === 0) {
 					alert("No data found in the database.");
 					body += "-- 実験結果がありません_(._.)_ --";
