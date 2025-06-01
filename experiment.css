@@ -9,7 +9,6 @@ a#measure{
 }
 
 a#measure span{
-    position: fixed;
-    left: 50%;
-    top: 50%;
+    position: absolute;
+    transform: translate(.25rem, .25rem);
 }
