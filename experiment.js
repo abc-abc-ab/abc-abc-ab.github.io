@@ -69,7 +69,7 @@ submit = document.getElementById("submit");
 		};
 
 		submit.href = `mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=${encodeURIComponent(body)}`;
-		window.open(submit.href, "_blank", "popup=yes");
+		window.open(submit.href);
 	}
 
 // Open the database
