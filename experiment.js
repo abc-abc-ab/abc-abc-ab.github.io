@@ -169,27 +169,27 @@ if (submit) {
 					alert("No data found in the database.");
 					body += "-- 実験結果がありません_(._.)_ --";
 					return;
+				}
+
+				// Prepare the email body
+				
+				results.forEach((record, index) => {
+					body += `# ${index + 1}:\n`;
+					body += `名前: ${record.name}\n`;
+					body += `日付: ${record.year}/${record.month}/${record.day}\n`;
+					body += `時間帯: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夕方")}\n`;
+					body += `秒数: ${record.sec}秒\n\n`;
+				});
 			}
 
-			// Prepare the email body
-			
-			results.forEach((record, index) => {
-				body += `# ${index + 1}:\n`;
-				body += `名前: ${record.name}\n`;
-				body += `日付: ${record.year}/${record.month}/${record.day}\n`;
-				body += `時間帯: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夕方")}\n`;
-				body += `秒数: ${record.sec}秒\n\n`;
-			});
-		}
+			transaction.oncomplete = () => {
+				console.log("Transaction completed successfully");
+			};
 
-		transaction.oncomplete = () => {
-			console.log("Transaction completed successfully");
-		};
-
-		transaction.onerror = (event) => {
-			console.error("Transaction failed: %s", event.target.error.message);
-			alert("Transaction failed: " + event.target.error.message);
-		};
+			transaction.onerror = (event) => {
+				console.error("Transaction failed: %s", event.target.error.message);
+				alert("Transaction failed: " + event.target.error.message);
+			};
 		};
 
 		submit.href = `mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=${encodeURIComponent(body)}`;
