@@ -14,7 +14,7 @@ function InitButton(){
 }
 
 // Open the database
-const request = indexedDB.open(DB_NAME, DB_VERSION);
+
 /** @type {IDBDatabase} */
 let db = null, /** @type {IDBDatabase} */
 ifDB = false, min = 0, sec = 0, date = 0,
@@ -25,6 +25,9 @@ min1 = 0, sec1 = 0;
  */
 function DB(diff){
 	// IndexedDB API ----------------------------------------------------------------------------------------------------
+
+	// Open the database
+	const request = indexedDB.open(DB_NAME, DB_VERSION);
 	// Check if IndexedDB is supported
 	// Error handling
 	request.onerror = (event) => {
