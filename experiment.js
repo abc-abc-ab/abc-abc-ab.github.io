@@ -57,7 +57,8 @@ function DB(diff){
 
 		const now = new Date();
 		const hour = now.getHours();
-		const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // 修正: getHours()を使用
+		// 修正: getHours()を使用
+		const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // M(0-11), N(12-17), E(18-23)
 		// Add a new record to the objectStore
 		const record = {
 			year: now.getFullYear(),
