@@ -97,7 +97,7 @@ button.addEventListener("click", () => {
 		const diff = t1 - t0;
 		button.textContent = "終了";
 		buttonState = 3;
-		DB();
+		DB(diff);
 	}
 	else if(buttonState === false){
 		// Get the current date and time
