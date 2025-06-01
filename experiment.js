@@ -26,7 +26,7 @@ submit = document.getElementById("submit");
 
 /** @type {IDBDatabase} */
 let db = null, min = 0, sec = 0, date = 0,
-min1 = 0, sec1 = 0, body = "実験結果:%0A%0A";
+min1 = 0, sec1 = 0, body = "実験結果:\n\n";
 
 {
 	const request = indexedDB.open(DB_NAME, DB_VERSION);
