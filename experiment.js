@@ -9,7 +9,7 @@ DB_TRANSACTION_MODE = "readwrite";
 const button = document.getElementById("measure");
 let buttonState = false;
 function InitButton(){
-	button.textContent = "スタート";
+	button.children[0].textContent = "スタート";
 	buttonState = false;
 }
 
@@ -95,7 +95,7 @@ button.addEventListener("click", () => {
 		const t0 = min*60 + sec;
 		const t1 = min1*60 + sec1;
 		const diff = t1 - t0;
-		button.textContent = "終了";
+		button.children[0].textContent = "終了";
 		buttonState = 3;
 		DB(diff);
 	}
@@ -105,6 +105,6 @@ button.addEventListener("click", () => {
 		[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
 
 		buttonState = true;
-		button.textContent = "ストップ";
+		button.children[0].textContent = "ストップ";
 	}// buttonState = 3?
 });
