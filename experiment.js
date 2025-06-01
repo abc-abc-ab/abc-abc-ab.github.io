@@ -157,7 +157,7 @@ if (submit) {
 		request.onsuccess = (event) => {
 			const DB = request.result
 
-			const transaction = db.transaction(DB_STORE_NAME);
+			const transaction = DB.transaction(DB_STORE_NAME);
 			const objectStore = transaction.objectStore(DB_STORE_NAME);
 			const getAllRequest = objectStore.getAll();
 			getAllRequest.onsuccess = (event) => {
