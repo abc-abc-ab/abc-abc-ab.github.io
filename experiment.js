@@ -1,5 +1,5 @@
 "use strict";
-// JavaScript2.2.2
+// JavaScript2.3.0
 const DB_NAME = "Experiments", // Database name
 DB_VERSION = 2, // Database version ver.2
 DB_STORE_NAME = "Times", // Object store name
