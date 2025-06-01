@@ -1,7 +1,7 @@
 "use strict";
 
 const DB_NAME = "Experiments", // Database name
-DB_VERSION = 2, // Database version
+DB_VERSION = 2, // Database version ver.2
 DB_STORE_NAME = "Times", // Object store name
 DB_TRANSACTION_MODE = "readwrite"; // Transaction mode
 
