@@ -7,12 +7,12 @@ DB_TRANSACTION_MODE = "readwrite"; // Transaction mode
 
 // Get the button element
 const button = document.getElementById("measure");
-let buttonState = false;
-function InitButton(){
-	if (!button) return;
-	button.children[0].textContent = "スタート";
-	buttonState = false;
-}
+	let buttonState = false;
+	function InitButton(){
+		if (!button) return;
+		button.children[0].textContent = "スタート";
+		buttonState = false;
+	}
 /** @type {HTMLInputElement} */
 const measureName = document.getElementById("name");
 
