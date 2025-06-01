@@ -64,7 +64,7 @@ function DB(diff, measureName) {
 		console.log("Database opened successfully");
 		
 		db = request.result;
-		const transaction = DB.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
+		const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 		const objectStore = transaction.objectStore(DB_STORE_NAME);
 		
 		transaction.oncomplete = () => {
@@ -156,16 +156,15 @@ if (submit) {
 		// Successful processing
 		request.onsuccess = (event) => {
 			const DB = request.result
-		};
 
-		const transaction = db.transaction(DB_STORE_NAME);
-		const objectStore = transaction.objectStore(DB_STORE_NAME);
-		const getAllRequest = objectStore.getAll();
-		getAllRequest.onsuccess = (event) => {
-			const results = getAllRequest.result;
-			if (results.length === 0) {
-				alert("No data found in the database.");
-				return;
+			const transaction = db.transaction(DB_STORE_NAME);
+			const objectStore = transaction.objectStore(DB_STORE_NAME);
+			const getAllRequest = objectStore.getAll();
+			getAllRequest.onsuccess = (event) => {
+				const results = getAllRequest.result;
+				if (results.length === 0) {
+					alert("No data found in the database.");
+					return;
 			}
 
 			// Prepare the email body
@@ -187,8 +186,7 @@ if (submit) {
 			console.error("Transaction failed: %s", event.target.error.message);
 			alert("Transaction failed: " + event.target.error.message);
 		};
-
-
+		};
 
 		submit.href = encodeURIComponent("mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=" + body);
 	});
