@@ -57,7 +57,7 @@ function DB(diff){
 		// Add a new record to the objectStore
 		const record = {
 			year: now.getFullYear(),
-			month: now.getMonth() + 1, // Months are zero-based
+			month: now.getMonth() + 1, // Months are zero-based!
 			day: now.getDate(),
 			when: (now.getMinutes() < 12) ? "M" : (now.getMinutes() < 18) ? "N" : "E", // Morning, Noon, Evening
 			sec: diff
