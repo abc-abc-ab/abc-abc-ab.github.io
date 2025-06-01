@@ -17,6 +17,10 @@ const button = document.getElementById("measure");
 const measureName = document.getElementById("name"),
 /** @type {HTMLAnchorElement} */
 submit = document.getElementById("submit");
+	function InitSubmit(){
+		if (!submit) return;
+		submit.href = "#";
+	}
 
 // Open the database
 
