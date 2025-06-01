@@ -1,7 +1,7 @@
 "use strict";
 
 const DB_NAME = "Experiments", // Database name
-DB_VERSION = 1, // Database version
+DB_VERSION = 2, // Database version
 DB_STORE_NAME = "Times", // Object store name
 DB_TRANSACTION_MODE = "readwrite"; // Transaction mode
 
@@ -13,6 +13,8 @@ function InitButton(){
 	button.children[0].textContent = "スタート";
 	buttonState = false;
 }
+/** @type {HTMLInputElement} */
+const measureName = document.getElementById("name");
 
 // Open the database
 
@@ -23,9 +25,10 @@ min1 = 0, sec1 = 0;
 /**
  * @param {number} diff
  */
-function DB(diff){
+function DB(diff, measureName) {
 	// IndexedDB API ----------------------------------------------------------------------------------------------------
 
+	
 	// Open the database
 	const request = indexedDB.open(DB_NAME, DB_VERSION);
 	// Check if IndexedDB is supported
@@ -78,6 +81,7 @@ function DB(diff){
 		// Create an objectStore for this database
 		const objectStore = request.result.createObjectStore(DB_STORE_NAME, {autoIncrement: true});
 
+		objectStore.createIndex("name", "name", { unique: false });
 		// year: yyyy, month: mm, day: dd
 		objectStore.createIndex("year","year", { unique: false });
 		objectStore.createIndex("month","month", { unique: false });
@@ -100,9 +104,10 @@ if (button) {
 			const t0 = min*60 + sec;
 			const t1 = min1*60 + sec1;
 			const diff = t1 - t0;
+			
 			button.children[0].textContent = "終了";
 			buttonState = 3; // 終わった後: 3
-			DB(diff);
+			DB(diff, measureName.value);
 		}
 		else if(buttonState === false){
 			// Get the current date and time
