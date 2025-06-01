@@ -9,5 +9,6 @@ a#measure{
 }
 
 a#measure span{
+    display: inline-block;
     transform: translate(.25rem, .25rem);
 }
