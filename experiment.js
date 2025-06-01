@@ -14,13 +14,15 @@ const button = document.getElementById("measure");
 		buttonState = false;
 	}
 /** @type {HTMLInputElement} */
-const measureName = document.getElementById("name");
+const measureName = document.getElementById("name"),
+/** @type {HTMLAnchorElement} */
+submit = document.getElementById("submit");
 
 // Open the database
 
 /** @type {IDBDatabase} */
 let db = null, ifDB = false, min = 0, sec = 0, date = 0,
-min1 = 0, sec1 = 0;
+min1 = 0, sec1 = 0, body = "";
 
 /**
  * @param {number} diff
@@ -119,5 +121,58 @@ if (button) {
 			button.children[0].textContent = "ストップ";
 		}
 		// もし「終了」状態から再スタートしたい場合はここに追加できます
+	});
+}
+
+if (submit) {
+	submit.addEventListener("click", (event) => {
+		const request = indexedDB.open(DB_NAME, DB_VERSION);
+		// Check if IndexedDB is supported
+		// Error handling
+		request.onerror = (event) => {
+			console.log("Error opening database: %s", request.error.message);
+			alert(
+				"Sorry, you can't use IndexedDB.",
+			);
+			throw new Error("IndexedDB is not supported in this browser.");
+		};
+		// Successful processing
+		request.onsuccess = (event) => {
+			const DB = request.result
+		};
+
+		const transaction = db.transaction(DB_STORE_NAME);
+		const objectStore = transaction.objectStore(DB_STORE_NAME);
+		const getAllRequest = objectStore.getAll();
+		getAllRequest.onsuccess = (event) => {
+			const results = getAllRequest.result;
+			if (results.length === 0) {
+				alert("No data found in the database.");
+				return;
+			}
+
+			// Prepare the email body
+			body = "実験結果:\n\n";
+			results.forEach((record, index) => {
+				body += `# ${index + 1}:\n`;
+				body += `名前: ${record.name}\n`;
+				body += `日付: ${record.year}/${record.month}/${record.day}\n`;
+				body += `時間帯: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夜")}\n`;
+				body += `秒数: ${record.sec}秒\n\n`;
+			});
+		}
+
+		transaction.oncomplete = () => {
+			console.log("Transaction completed successfully");
+		};
+
+		transaction.onerror = (event) => {
+			console.error("Transaction failed: %s", event.target.error.message);
+			alert("Transaction failed: " + event.target.error.message);
+		};
+
+
+
+		submit.href = encodeURIComponent("mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=" + body);
 	});
 }
