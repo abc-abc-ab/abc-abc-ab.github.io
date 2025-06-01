@@ -44,8 +44,7 @@ function DB(diff){
 		
 		transaction.oncomplete = () => {
 			console.log("Transaction completed successfully");
-			button.textContent = "終了";
-			buttonState = false;
+			
 		};
 
 		transaction.onerror = (event) => {
@@ -96,6 +95,8 @@ button.addEventListener("click", () => {
 		const t0 = min*60 + sec;
 		const t1 = min1*60 + sec1;
 		const diff = t1 - t0;
+		button.textContent = "終了";
+		buttonState = 3;
 		DB();
 	}
 	else if(buttonState === false){
