@@ -26,7 +26,7 @@ submit = document.getElementById("submit");
 
 /** @type {IDBDatabase} */
 let db = null, min = 0, sec = 0, date = 0,
-min1 = 0, sec1 = 0, body = "";
+min1 = 0, sec1 = 0, body = "実験結果:%0A%0A";
 
 {
 	const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -164,7 +164,7 @@ if (submit) {
 				const results = getAllRequest.result;
 				if (results.length === 0) {
 					alert("No data found in the database.");
-					body += "-- 実験結果がありません_(._.)_ --";
+					body += "--%20%E5%AE%9F%E9%A8%93%E7%B5%90%E6%9E%9C%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93_(._.)_%20--";
 					return;
 			}
 
