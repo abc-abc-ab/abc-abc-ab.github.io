@@ -34,7 +34,7 @@ submit = document.getElementById("submit");
 		request.onsuccess = (event) => {
 			const DB = request.result
 
-			const transaction = DB.transaction(DB_STORE_NAME);
+			const transaction = DB.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 			const objectStore = transaction.objectStore(DB_STORE_NAME);
 			const getAllRequest = objectStore.getAll();
 			let results = [];
