@@ -24,34 +24,49 @@ min1 = 0, sec1 = 0;
  * @param {number} diff
  */
 function DB(diff){
-// IndexedDB API ----------------------------------------------------------------------------------------------------
-// Check if IndexedDB is supported
-// Error handling
-request.onerror = (event) => {
-	console.log("Error opening database: %s", request.error.message);
-	alert(
-	"Sorry, you can't use IndexedDB.",
-	);
-	throw new Error("IndexedDB is not supported in this browser.");
-};
-// Successful processing
-request.onsuccess = (event) => {
-	console.log("Database opened successfully");
-
-	db = ifDB?ifDB:request.result;
-	const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
-	const objectStore = transaction.objectStore(DB_STORE_NAME);
-
-	const now = new Date();
-	// Add a new record to the objectStore
-	const record = {
-		year: now.getFullYear(),
-		month: now.getMonth() + 1, // Months are zero-based
-		day: now.getDate(),
-		when: (min < 12) ? "M" : (min < 18) ? "N" : "E", // Morning, Noon, Evening
-		sec: diff
+	// IndexedDB API ----------------------------------------------------------------------------------------------------
+	// Check if IndexedDB is supported
+	// Error handling
+	request.onerror = (event) => {
+		console.log("Error opening database: %s", request.error.message);
+		alert(
+			"Sorry, you can't use IndexedDB.",
+		);
+		throw new Error("IndexedDB is not supported in this browser.");
 	};
-};
+	// Successful processing
+	request.onsuccess = (event) => {
+		console.log("Database opened successfully");
+		
+		db = ifDB?ifDB:request.result;
+		const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
+		const objectStore = transaction.objectStore(DB_STORE_NAME);
+		
+		transaction.oncomplete = () => {
+			console.log("Transaction completed successfully");
+			button.textContent = "終了";
+			buttonState = false;
+		};
+
+		transaction.onerror = (event) => {
+			console.error("Transaction failed: %s", event.target.error.message);
+			alert("Transaction failed: " + event.target.error.message);
+		};
+
+		const now = new Date();
+		// Add a new record to the objectStore
+		const record = {
+			year: now.getFullYear(),
+			month: now.getMonth() + 1, // Months are zero-based
+			day: now.getDate(),
+			when: (now.getMinutes() < 12) ? "M" : (now.getMinutes() < 18) ? "N" : "E", // Morning, Noon, Evening
+			sec: diff
+		};
+
+		const addRequest = objectStore.add(record);
+	};
+
+
 // This event is only implemented in modern browsers.
 request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 	// Save to the IDBDatabase interface
@@ -74,7 +89,7 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 // Measure button click event
 InitButton();
 button.addEventListener("click", () => {
-	if(buttonState){
+	if(buttonState === true){
 		const now = new Date();
 		[min1, sec1] = [now.getMinutes(), now.getSeconds()];
 		const t0 = min*60 + sec;
@@ -82,11 +97,11 @@ button.addEventListener("click", () => {
 		const diff = t1 - t0;
 		DB();
 	}
-	else{
+	else if(buttonState === false){
 		// Get the current date and time
 		const now = new Date();
 		[min, sec, date] = [now.getMinutes(), now.getSeconds(), now.getDate()];
 
 		button.textContent = "ストップ";
-	}
+	}// buttonState = 3?
 });
