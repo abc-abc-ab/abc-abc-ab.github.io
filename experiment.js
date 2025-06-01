@@ -86,6 +86,7 @@ request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
 };
 // IndexedDB API ----------------------------------------------------------------------------------------------------
 }
+
 // Measure button click event
 InitButton();
 button.addEventListener("click", () => {
