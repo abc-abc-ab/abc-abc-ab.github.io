@@ -188,6 +188,6 @@ if (submit) {
 		};
 		};
 
-		submit.href = encodeURIComponent("mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=" + body);
+		submit.href = `mailto:${encodeURIComponent(`haruma1304@outlook.jp?subject=時間_実験結果&body=${body}`)}`;
 	});
 }
