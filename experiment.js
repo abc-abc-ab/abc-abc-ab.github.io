@@ -28,6 +28,19 @@ submit = document.getElementById("submit");
 let db = null, ifDB = false, min = 0, sec = 0, date = 0,
 min1 = 0, sec1 = 0, body = "";
 
+{
+	const request = indexedDB.open(DB_NAME, DB_VERSION);
+	// Check if IndexedDB is supported
+	// Error handling
+	request.onerror = (event) => {
+		console.log("Error opening database: %s", request.error.message);
+		alert(
+			"Sorry, you can't use IndexedDB.",
+		);
+		throw new Error("IndexedDB is not supported in this browser.");
+	};
+}
+
 /**
  * @param {number} diff
  */
