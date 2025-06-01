@@ -7,3 +7,9 @@ a#measure{
     margin-left: auto;
     margin-right: auto;
 }
+
+a#measure span{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+}
