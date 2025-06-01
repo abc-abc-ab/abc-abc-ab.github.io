@@ -143,7 +143,6 @@ if (button) {
 
 if (submit) {
 	submit.addEventListener("click", (event) => {
-		body = "実験結果:\n\n";
 		const request = indexedDB.open(DB_NAME, DB_VERSION);
 		// Check if IndexedDB is supported
 		// Error handling
@@ -161,6 +160,7 @@ if (submit) {
 			const transaction = DB.transaction(DB_STORE_NAME);
 			const objectStore = transaction.objectStore(DB_STORE_NAME);
 			const getAllRequest = objectStore.getAll();
+			body = "実験結果:\n\n";
 			getAllRequest.onsuccess = (event) => {
 				const results = getAllRequest.result;
 				if (results.length === 0) {
