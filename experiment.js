@@ -41,7 +41,7 @@ function DB(diff){
 	request.onsuccess = (event) => {
 		console.log("Database opened successfully");
 		
-		db = ifDB?ifDB:request.result;
+		db = request.result;
 		const transaction = db.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 		const objectStore = transaction.objectStore(DB_STORE_NAME);
 		
@@ -71,25 +71,23 @@ function DB(diff){
 	};
 
 
-// This event is only implemented in modern browsers.
-request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
-	// Save to the IDBDatabase interface
-	ifDB = event.target.result;
+	// This event is only implemented in modern browsers.
+	request.onupgradeneeded = /** @param {IDBVersionChangeEvent} event*/(event) => {
+		// Save to the IDBDatabase interface
+		// Create an objectStore for this database
+		const objectStore = request.result.createObjectStore(DB_STORE_NAME, {autoIncrement: true});
 
-	// Create an objectStore for this database
-	const objectStore = ifDB.createObjectStore(DB_STORE_NAME, {autoIncrement: true});
-
-	// year: yyyy, month: mm, day: dd
-	objectStore.createIndex("year","year", { unique: false });
-	objectStore.createIndex("month","month", { unique: false });
-	objectStore.createIndex("day","day", { unique: false });
-	// when: M(Morning) or N(noon) or E(evening)
-	objectStore.createIndex("when","when", { unique: false });
-	// sec: ss
-	objectStore.createIndex("sec","sec", { unique: false });
+		// year: yyyy, month: mm, day: dd
+		objectStore.createIndex("year","year", { unique: false });
+		objectStore.createIndex("month","month", { unique: false });
+		objectStore.createIndex("day","day", { unique: false });
+		// when: M(Morning) or N(noon) or E(evening)
+		objectStore.createIndex("when","when", { unique: false });
+		// sec: ss
+		objectStore.createIndex("sec","sec", { unique: false });
+	};
+	// IndexedDB API ----------------------------------------------------------------------------------------------------
 };
-// IndexedDB API ----------------------------------------------------------------------------------------------------
-}
 
 // Measure button click event
 InitButton();
