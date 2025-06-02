@@ -239,3 +239,18 @@ if (submit) {
 		window.setTimeout(DoSubmit, 10);
 	});
 }
+
+/////
+let expanded = false;
+
+function showCheckboxes() {
+  const checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+/////
