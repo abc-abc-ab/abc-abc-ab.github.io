@@ -75,7 +75,6 @@ submit = document.getElementById("submit");
 const DBdelete = document.getElementById("delete");
 	function DoDelete(){
 		if (!DBdelete) return;
-		const request = indexedDB.open(DB_NAME, DB_VERSION);
 		// Open the database
 		const request = indexedDB.open(DB_NAME, DB_VERSION);
 		// Check if IndexedDB is supported
