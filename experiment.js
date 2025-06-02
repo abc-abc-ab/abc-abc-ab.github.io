@@ -16,7 +16,7 @@ const button = document.getElementById("measure");
 /** @type {HTMLInputElement} */
 const measureName = document.getElementById("name"),
 /** @type {HTMLAnchorElement} */
-submit = document.getElementById("submit"),
+submit = document.getElementById("submit");
 	function DoSubmit(){
 		if (!submit) return;
 		submit.href = "#";
@@ -72,7 +72,7 @@ submit = document.getElementById("submit"),
 		window.open(submit.href);
 	};
 /** @type {HTMLAnchorElement} */
-DBdelete = document.getElementById("delete");
+const DBdelete = document.getElementById("delete");
 	function DoDelete(){
 		if (!DBdelete) return;
 		const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -112,7 +112,7 @@ DBdelete = document.getElementById("delete");
 				body += `seconds: ${record.sec}sec\n\n`;
 			});
 		}
-		
+
 	};
 
 // Open the database
