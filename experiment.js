@@ -12,11 +12,11 @@ const button = document.getElementById("measure");
 		if (!button) return;
 		button.children[0].textContent = "スタート";
 		buttonState = false;
-	}
+	};
 /** @type {HTMLInputElement} */
 const measureName = document.getElementById("name"),
 /** @type {HTMLAnchorElement} */
-submit = document.getElementById("submit");
+submit = document.getElementById("submit"),
 	function DoSubmit(){
 		if (!submit) return;
 		submit.href = "#";
@@ -70,7 +70,50 @@ submit = document.getElementById("submit");
 
 		submit.href = `mailto:haruma1304@outlook.jp?subject=時間_実験結果&body=${encodeURIComponent(body)}`;
 		window.open(submit.href);
-	}
+	};
+/** @type {HTMLAnchorElement} */
+DBdelete = document.getElementById("delete");
+	function DoDelete(){
+		if (!DBdelete) return;
+		const request = indexedDB.open(DB_NAME, DB_VERSION);
+		// Open the database
+		const request = indexedDB.open(DB_NAME, DB_VERSION);
+		// Check if IndexedDB is supported
+		// Error handling
+		request.onerror = (event) => {
+			console.log("Error opening database: %s", request.error.message);
+			alert(
+				"Sorry, you can't use IndexedDB.",
+			);
+			throw new Error("IndexedDB is not supported in this browser.");
+		};
+		// Successful processing
+		request.onsuccess = (event) => {
+			console.log("Database opened successfully");
+		}
+		// Delete the database
+		const transaction = request.result.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
+		const objectStore = transaction.objectStore(DB_STORE_NAME);
+		const getAllRequest = objectStore.getAll();
+		let body = "";
+		if (results.length === 0) {
+			alert("No data found in the database.");
+			body += "-- 実験結果がありません_(._.)_ --";
+			return;
+		};
+		getAllRequest.onsuccess = (event) => {
+			results = getAllRequest.result;
+			body = "実験結果:\n\n";
+			results.forEach((record, index) => {
+				body += `#${index + 1}:\n`;
+				body += `name: ${record.name}\n`;
+				body += `date: ${record.year}/${record.month}/${record.day}\n`;
+				body += `timeframe: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夕方")}\n`;
+				body += `seconds: ${record.sec}sec\n\n`;
+			});
+		}
+		
+	};
 
 // Open the database
 
