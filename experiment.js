@@ -94,23 +94,20 @@ const DBdelete = document.getElementById("delete");
 		const transaction = request.result.transaction(DB_STORE_NAME, DB_TRANSACTION_MODE);
 		const objectStore = transaction.objectStore(DB_STORE_NAME);
 		const getAllRequest = objectStore.getAll();
-		let body = "";
-		if (results.length === 0) {
-			alert("No data found in the database.");
-			body += "-- 実験結果がありません_(._.)_ --";
-			return;
-		};
 		getAllRequest.onsuccess = (event) => {
-			results = getAllRequest.result;
-			body = "実験結果:\n\n";
-			results.forEach((record, index) => {
-				body += `#${index + 1}:\n`;
-				body += `name: ${record.name}\n`;
-				body += `date: ${record.year}/${record.month}/${record.day}\n`;
-				body += `timeframe: ${record.when==="M"?"朝":(record.when==="N"?"昼":"夕方")}\n`;
-				body += `seconds: ${record.sec}sec\n\n`;
-			});
-		}
+			const results = getAllRequest.result;
+			if (results.length === 0) {
+				alert("No data found in the database.");
+				return;
+			}
+			if (!confirm("本当にデータを削除しますか？")) return;
+
+			results.forEach((record) => {
+				if (/test|テスト/i.test(record.name)){
+					objectStore.delete(record);
+				}
+			})
+		};
 
 	};
 
@@ -162,6 +159,21 @@ function DB(diff, measureName) {
 		transaction.oncomplete = () => {
 			console.log("Transaction completed successfully");
 			
+			const now = new Date();
+			const hour = now.getHours();
+			// 修正: getHours()を使用
+			const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // M(0-11), N(12-17), E(18-23)
+			// Add a new record to the objectStore
+			const record = {
+				name: measureName,
+				year: now.getFullYear(),
+				month: now.getMonth() + 1, // Months are zero-based!
+				day: now.getDate(),
+				when: when,
+				sec: diff
+			};
+			const addRequest = objectStore.add(record);
+
 		};
 
 		transaction.onerror = (event) => {
@@ -169,21 +181,6 @@ function DB(diff, measureName) {
 			alert("Transaction failed: " + event.target.error.message);
 		};
 
-		const now = new Date();
-		const hour = now.getHours();
-		// 修正: getHours()を使用
-		const when = (hour < 12) ? "M" : (hour < 18) ? "N" : "E"; // M(0-11), N(12-17), E(18-23)
-		// Add a new record to the objectStore
-		const record = {
-			name: measureName,
-			year: now.getFullYear(),
-			month: now.getMonth() + 1, // Months are zero-based!
-			day: now.getDate(),
-			when: when,
-			sec: diff
-		};
-
-		const addRequest = objectStore.add(record);
 	};
 
 
